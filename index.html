@@ -1,51 +1,205 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta name="description" content="Étienne's Website">
-    <meta name="keywords" content="">
-    <meta name="author" content="ShenYT0">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-    <meta property="og:title" content="Étienne's Website">
-    <meta property="og:description" content="personal github page">
-    <meta property="og:image" content="https://ih1.redbubble.net/image.5552029225.4622/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.jpg">
-    <meta property="og:url" content="https://shenyt0.github.io/">
-    <meta property="og:type" content="website">
+        <meta property="og:title" content="Étienne's Website">
+        <meta property="og:description" content="personal github page">
+        <meta property="og:image" content="https://avatars.githubusercontent.com/u/106409527?v=4">
+        <meta property="og:url" content="https://shenyt0.github.io/">
+        <meta property="og:type" content="website">
+        <title>Étienne's Website</title>
+        <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!-- tiny placeholder -->
+        <style>
+            :root{
+            --bg:#0f1724; --card:#0b1220; --accent:#7dd3fc; --muted:#9aa6b2; --glass: rgba(255,255,255,0.03);
+            color-scheme: dark;
+            }
+            html,body{height:100%;}
+            body{
+            margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: linear-gradient(180deg,#071025 0%, #071726 60%); color:#e6eef6; -webkit-font-smoothing:antialiased;
+            display:flex; align-items:center; justify-content:center; padding:32px;
+            }
+            .container{max-width:960px; width:100%;}
+            header{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px}
+            .brand{display:flex; gap:12px; align-items:center}
+            .avatar{width:64px; height:64px; border-radius:12px; background:linear-gradient(135deg,var(--accent),#60a5fa); display:flex; align-items:center; justify-content:center; font-weight:700; color:#022;}
+            .title h1{margin:0;font-size:20px}
+            .title p{margin:0;color:var(--muted);font-size:13px}
+            .controls{display:flex; gap:8px; align-items:center}
+            .btn{background:var(--glass); border:1px solid rgba(255,255,255,0.04); padding:8px 12px; border-radius:10px; cursor:pointer}
+            main{display:grid; grid-template-columns: 1fr 350px; gap:20px}
+            .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03)); padding:18px; border-radius:12px; box-shadow: 0 6px 18px rgba(2,6,23,0.6);}
+            h2{margin-top:0}
+            .links a{color:var(--accent); text-decoration:none}
+            .meta{color:var(--muted); font-size:14px}
+            .project{margin-bottom:12px}
+            footer{margin-top:18px; color:var(--muted); font-size:13px}
+            @media(max-width:880px){ main{grid-template-columns:1fr;} .avatar{width:56px;height:56px} }
+        </style>
+    </head>
+    <body>
+        <div id="app" class="container">
+            <header>
+                <div class="brand">
+                    <div class="avatar"><img src="https://avatars.githubusercontent.com/u/106409527?v=4" alt="Shen Yuntian" /></div>
+                    <div class="title">
+                        <h1>{{ t('name') }}</h1>
+                        <p class="meta">{{ t('headline') }}</p>
+                    </div>
+                </div>
+                <div class="controls">
+                    <div style="display:flex;gap:8px;align-items:center">
+                        <button class="btn" @click="setLang('en')">EN</button>
+                        <button class="btn" @click="setLang('fr')">FR</button>
+                    </div>
+                    <a :href="mailto" class="btn">{{ t('contact') }}</a>
+                </div>
+            </header>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <!-- 看板娘开始 -->
-    <link href='https://cdn.jsdelivr.net/gh/xiaoyanu/file-test@2021.12.1-2/kbn/pio.css' rel='stylesheet' type='text/css'/>
-    <!-- 可选位置： left 或 right -->
-    <div class="pio-container left">
-        <div class="pio-action"></div>
-        <!-- 高度和宽度根据每个模型的不同 进行调整 -->
-        <canvas id="pio" width="170" height="295"></canvas>
-    </div>
-    <script src='https://cdn.jsdelivr.net/gh/xiaoyanu/file-test@2021.12.1-2/kbn/l2d.js'></script>
-    <script src='https://cdn.jsdelivr.net/gh/xiaoyanu/file-test@2021.12.1-2/kbn/pio.js'></script>
-    <script>
-        var pio = new Paul_Pio({
-            "mode": "fixed",
-            "touch": ["点击提示文字在kbn/pio.js中修改"],
-            "hidden": false, //手机端是否隐藏
-            "referer": "🎉欢迎来自 %t 的朋友~",
-            "content": {
-                "welcome": "🎉欢迎来到本站！"
+            <main>
+                <section>
+                    <div class="card">
+                        <h2>{{ t('profile') }}</h2>
+                        <p><strong>{{ t('name') }}</strong></p>
+                        <p class="meta">{{ t('role') }}</p>
+
+                        <h3>{{ t('contact') }}</h3>
+                        <ul>
+                            <li><strong>Email:</strong> <a :href="mailto">{{ profile.email }}</a></li>
+                            <li><strong>LinkedIn:</strong> <a :href="profile.linkedin" target="_blank">{{ profile.linkedin }}</a></li>
+                            <li><strong>GitHub:</strong> <a :href="profile.github" target="_blank">{{ profile.github }}</a></li>
+                            <li><strong>Kaggle:</strong> <a :href="profile.kaggle" target="_blank">{{ profile.kaggle }}</a></li>
+                        </ul>
+
+                        <hr />
+                        <h2>{{ t('formation') }}</h2>
+                        <div>
+                            <p><strong>Institut national des langues et civilisations orientales (Inalco)</strong><br>
+                            Master 2 (M2), Traitement automatique des langues — sept. 2023 - dec. 2025</p>
+
+                            <p><strong>Université de Picardie Jules Verne (UPJV) IUT Amiens</strong><br>
+                            DUT, Informatique — sept. 2019 - juin 2021</p>
+
+                            <p><strong>Université Grenoble Alpes</strong><br>
+                            Bachelor's degree, Informatique — sept. 2022 - juin 2023</p>
+                        </div>
+
+                        <hr />
+                        <h2>{{ t('projects') }}</h2>
+                        <div class="project">
+                            <h4>Job Scanner</h4>
+                            <p class="meta">Mistral MCP Hackathon — 4th Finalist</p>
+                            <p>{{ t('jobscanner_desc') }} <a href="https://github.com/CourantEnCourant/JobScanner" target="_blank">GitHub</a>.</p>
+                        </div>
+
+                    </div>
+                </section>
+
+                <aside>
+                    <div class="card">
+                        <h3>{{ t('summary') }}</h3>
+                        <p class="meta">{{ t('short_bio') }}</p>
+                        <footer>
+                            <p>© {{ new Date().getFullYear() }} Shen Yuntian</p>
+                        </footer>
+                    </div>
+                </aside>
+            </main>
+        </div>
+
+        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+        <script>
+            const translations = {
+                en: {
+                    name: 'Shen Yuntian',
+                    headline: 'M2 — Natural Language Processing (Inalco)',
+                    profile: 'Profile',
+                    role: 'NLP student & developer',
+                    contact: 'Contact',
+                    formation: 'Education',
+                    projects: 'Projects',
+                    jobscanner_desc: 'MCP tools for professional networking: an MCP server that helps users find jobs, tailor CVs and automate applications.',
+                    summary: 'About me',
+                    short_bio: "NLP enthusiast currently studying Machine Translation / Text Processing. I build web APIs and data pipelines.",
+                },
+                fr: {
+                    name: 'Shen Yuntian',
+                    headline: 'M2 — Traitement automatique des langues (Inalco)',
+                    profile: 'Profil',
+                    role: 'Étudiant en TAL & développeur',
+                    contact: 'Contact',
+                    formation: 'Formation',
+                    projects: 'Projets',
+                    jobscanner_desc: "Outils MCP pour les rencontres professionnelles : un serveur MCP qui aide les utilisateurs à trouver un emploi, personnaliser leur CV et automatiser leurs candidatures.",
+                    summary: 'À propos',
+                    short_bio: "Passionné de TAL, j'étudie la traduction automatique et le traitement de texte. Je développe des API web et des pipelines de données.",
+                }
+            }
+
+            const app = Vue.createApp({
+            data(){
+                return {
+                    lang: localStorage.getItem('lang') || 'en',
+                    profile: {
+                        email: 'shenyuntian0@gmail.com',
+                        linkedin: 'https://www.linkedin.com/in/yuntian-shen-6a4715217',
+                        github: 'https://github.com/ShenYT0',
+                        kaggle: 'https://www.kaggle.com/shenyt0'
+                    }
+                }
             },
-            // 可用参数：
-            // "leimu" "1" "2" "kangna" "qingye" "shawu" "xiaomai" "zhinai"
-            
-            // 举例子：
-            // "model": ["https://cdn.jsdelivr.net/gh/xiaoyanu/file-test@2021.12.1/kbn/ 可修改参数位置 /model.json"],
-            
-            "model": ["https://cdn.jsdelivr.net/gh/xiaoyanu/file-test@2021.12.1/kbn/xiaomai/model.json"],
-            
-            "tips": true //如果设置为false则会优先显示welcome中的内容“欢迎~”
-        });
-    </script>
-    <!-- 看板娘结束 -->
-</body>
+            methods:{
+                setLang(l){ this.lang = l; localStorage.setItem('lang', l) },
+                t(k){ return (translations[this.lang] && translations[this.lang][k]) || translations['en'][k] || k }
+            },
+            computed:{
+                mailto(){ return `mailto:${this.profile.email}` }
+            },
+            mounted(){
+                // simple accessibility: set document language
+                document.documentElement.lang = this.lang === 'fr' ? 'fr' : 'en'
+            },
+                watch:{
+                    lang(newVal){ document.documentElement.lang = newVal === 'fr' ? 'fr' : 'en' }
+                }
+            })
+
+            app.mount('#app')
+        </script>
+
+        <!-- 看板娘开始 -->
+        <link href='https://cdn.jsdelivr.net/gh/xiaoyanu/file-test@2021.12.1-2/kbn/pio.css' rel='stylesheet' type='text/css'/>
+        <!-- 可选位置： left 或 right -->
+        <div class="pio-container left">
+            <div class="pio-action"></div>
+            <!-- 高度和宽度根据每个模型的不同 进行调整 -->
+            <canvas id="pio" width="170" height="295"></canvas>
+        </div>
+        <script src='https://cdn.jsdelivr.net/gh/xiaoyanu/file-test@2021.12.1-2/kbn/l2d.js'></script>
+        <script src='https://cdn.jsdelivr.net/gh/xiaoyanu/file-test@2021.12.1-2/kbn/pio.js'></script>
+        <script>
+            var pio = new Paul_Pio({
+                "mode": "fixed",
+                "touch": ["点击提示文字在kbn/pio.js中修改"],
+                "hidden": false, //手机端是否隐藏
+                "referer": "🎉欢迎来自 %t 的朋友~",
+                "content": {
+                    "welcome": "🎉欢迎来到本站！"
+                },
+                // 可用参数：
+                // "leimu" "1" "2" "kangna" "qingye" "shawu" "xiaomai" "zhinai"
+                
+                // 举例子：
+                // "model": ["https://cdn.jsdelivr.net/gh/xiaoyanu/file-test@2021.12.1/kbn/ 可修改参数位置 /model.json"],
+                
+                "model": ["https://cdn.jsdelivr.net/gh/xiaoyanu/file-test@2021.12.1/kbn/xiaomai/model.json"],
+                
+                "tips": true //如果设置为false则会优先显示welcome中的内容“欢迎~”
+            });
+        </script>
+        <!-- 看板娘结束 -->
+    </body>
 </html>
