@@ -46,8 +46,8 @@ export const translations: Record<SupportedLang, TranslationSet> = {
   fr: {
     hero: {
       greeting: 'Bonjour, je suis',
-      subtitle: 'Étudiant en informatique & TALN',
-      description: 'Étudiant chinois en informatique et TALN, basé à Paris, France.',
+      subtitle: 'Étudiant en informatique & TAL',
+      description: 'Étudiant chinois en informatique et TAL, basé à Paris, France.',
       contactBtn: 'Me Contacter',
       projectsBtn: 'Voir les Projets',
       scroll: 'Défiler',
@@ -55,7 +55,7 @@ export const translations: Record<SupportedLang, TranslationSet> = {
     about: {
       title: 'À Propos',
       location: { title: 'Localisation', text: 'Paris, France' },
-      education: { title: 'Formation', text: 'Master TALN @ Inalco' },
+      education: { title: 'Formation', text: 'Master TAL @ Inalco' },
       languages: {
         title: 'Langues',
         zh: 'Chinois', zhLevel: 'Langue maternelle',
