@@ -1,6 +1,15 @@
 import { Globe } from './Globe';
 import { useI18n } from '../hooks/useI18n';
 
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (el) {
+    const navHeight = 80;
+    const top = el.getBoundingClientRect().top + window.scrollY - navHeight;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+}
+
 export function Hero() {
   const { t } = useI18n();
 
@@ -19,12 +28,12 @@ export function Hero() {
             <p className="hero-subtitle">{t('hero.subtitle')}</p>
             <p className="hero-desc">{t('hero.description')}</p>
             <div className="hero-actions">
-              <a href="#contact" className="btn btn-primary">
+              <button onClick={() => scrollToSection('contact')} className="btn btn-primary">
                 {t('hero.contactBtn')}
-              </a>
-              <a href="#projects" className="btn btn-outline">
+              </button>
+              <button onClick={() => scrollToSection('projects')} className="btn btn-outline">
                 {t('hero.projectsBtn')}
-              </a>
+              </button>
             </div>
             <div className="hero-socials">
               <a href="mailto:shenyuntian0@gmail.com" target="_blank" title="Email" className="social-link">
