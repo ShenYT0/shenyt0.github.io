@@ -10,6 +10,7 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ToolsHome } from './components/tools/ToolsHome';
 import { RegexTester } from './components/tools/RegexTester';
+import { TarotsSimulator } from './components/tools/TarotsSimulator';
 import { I18nProvider } from './context/I18nContext';
 import { useTheme } from './hooks/useTheme';
 import './styles.css';
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/tools" element={<ToolsHome />} />
           <Route path="/tools/regex-tester" element={<RegexTester />} />
+          <Route path="/tools/tarots-simulator" element={<TarotsSimulator />} />
         </Routes>
         <Footer />
       </I18nProvider>

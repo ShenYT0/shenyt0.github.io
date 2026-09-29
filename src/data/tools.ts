@@ -14,4 +14,11 @@ export const tools: ToolInfo[] = [
     icon: '🔍',
     path: '/tools/regex-tester',
   },
+  {
+    id: 'tarots-simulator',
+    title: 'Tarots Simulator',
+    description: 'Draw and simulate tarot readings with Major and Minor Arcana.',
+    icon: '🔮',
+    path: '/tools/tarots-simulator',
+  },
 ];
