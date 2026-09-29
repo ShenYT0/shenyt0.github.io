@@ -1,4 +1,4 @@
-# Yutong Shen - Personal Homepage
+# My Personal Homepage
 
 Personal homepage built with **TypeScript + Vite**, deployed to **GitHub Pages** via GitHub Actions.
 
