@@ -3,6 +3,8 @@
     --tarots-deep: #1269cc;   /* page background */
     --tarots-soft: #6d9ac7;   /* secondary / borders / decorations */
     --tarots-cyan: #51eefc;   /* primary text & accents */
+    --tarots-card-w: 108px;   /* card size — shrunk on small screens */
+    --tarots-card-h: 156px;
 
     position: relative;
     overflow: hidden;
@@ -145,8 +147,8 @@
     position: absolute;
     left: 34px;
     top: 50%;
-    width: 108px;
-    height: 156px;
+    width: var(--tarots-card-w);
+    height: var(--tarots-card-h);
     transform: translateY(-50%);
     cursor: grab;
     touch-action: none;
@@ -275,8 +277,8 @@ body.tarots-active .footer {
 /* ===== Cards on the table ===== */
 .tarot-card {
     position: absolute;
-    width: 108px;
-    height: 156px;
+    width: var(--tarots-card-w);
+    height: var(--tarots-card-h);
     perspective: 900px;
     cursor: grab;
     touch-action: none;
@@ -401,6 +403,9 @@ body.tarots-active .footer {
 
 /* ===== Background music: vinyl record player (fixed bottom-left) ===== */
 .tarots-vinyl {
+    --tarots-disc-label: 15px;
+    --tarots-disc-ring: 17px;
+
     position: fixed;
     right: 24px;
     bottom: 24px;
@@ -433,7 +438,12 @@ body.tarots-active .footer {
     border-radius: 50%;
     background:
         radial-gradient(circle at 50% 50%, #0b0d14 0 2.5px, transparent 2.5px),
-        radial-gradient(circle at 50% 50%, #51eefc 0 15px, #1269cc 15px 17px, transparent 17px),
+        radial-gradient(
+            circle at 50% 50%,
+            #51eefc 0 var(--tarots-disc-label),
+            #1269cc var(--tarots-disc-label) var(--tarots-disc-ring),
+            transparent var(--tarots-disc-ring)
+        ),
         repeating-radial-gradient(circle at 50% 50%, #101018 0 2px, #1e1e2a 2px 4px),
         conic-gradient(
             from 210deg,
@@ -524,4 +534,116 @@ body.tarots-active .footer {
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
     transform: translateX(2px);
+}
+
+/* ===== Mobile adaptation ===== */
+@media (max-width: 720px) {
+    .tarots-page {
+        --tarots-card-w: 74px;
+        --tarots-card-h: 107px;
+        padding: 92px 0 120px;
+    }
+
+    .tarots-page__inner {
+        padding: 0 14px;
+    }
+
+    .tarots-page__title {
+        font-size: 1.55rem;
+        margin-bottom: 18px;
+    }
+
+    .tarots-toolbar {
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .tarots-btn {
+        padding: 7px 14px;
+        font-size: 0.78rem;
+    }
+
+    .tarots-toggle {
+        font-size: 0.78rem;
+    }
+
+    .tarots-toggle input {
+        width: 14px;
+        height: 14px;
+    }
+
+    .tarots-table {
+        height: clamp(340px, 62vh, 520px);
+        border-radius: var(--radius-md);
+    }
+
+    .tarots-table__hint {
+        max-width: 82%;
+        font-size: 0.78rem;
+    }
+
+    .tarots-deck {
+        left: 16px;
+    }
+
+    .tarots-deck__count {
+        bottom: -26px;
+        font-size: 0.66rem;
+    }
+
+    .tarots-result {
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .tarots-result__text {
+        min-height: 120px;
+        font-size: 0.8rem;
+    }
+
+    .tarots-vinyl {
+        --tarots-disc-label: 11px;
+        --tarots-disc-ring: 13px;
+        right: 14px;
+        bottom: 14px;
+        width: 64px;
+        height: 64px;
+    }
+
+    .tarots-vinyl__chip {
+        width: 22px;
+        height: 22px;
+    }
+
+    .tarots-vinyl__pause {
+        height: 10px;
+        box-shadow: 5px 0 0 #51eefc;
+    }
+
+    .tarots-vinyl__play {
+        border-left-width: 8px;
+        border-top-width: 5px;
+        border-bottom-width: 5px;
+    }
+
+    .tarots-vinyl__arm {
+        top: 4px;
+        left: -28px;
+        width: 30px;
+        height: 3px;
+    }
+
+    .tarots-vinyl__arm::before {
+        right: -4px;
+        top: -3px;
+        width: 10px;
+        height: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .tarots-page {
+        --tarots-card-w: 64px;
+        --tarots-card-h: 92px;
+    }
 }

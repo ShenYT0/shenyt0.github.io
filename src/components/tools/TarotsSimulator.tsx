@@ -115,11 +115,22 @@ export function TarotsSimulator() {
     [table],
   );
 
+  // Cards are sized responsively in CSS; measure the deck so dragging and
+  // clamping stay in sync with the rendered size.
+  const getCardSize = () => {
+    const deckEl = deckRef.current;
+    if (deckEl && deckEl.offsetWidth > 0) {
+      return { width: deckEl.offsetWidth, height: deckEl.offsetHeight };
+    }
+    return { width: CARD_WIDTH, height: CARD_HEIGHT };
+  };
+
   const clampToTable = (x: number, y: number) => {
     const el = tableRef.current;
     if (!el) return { x, y };
-    const maxX = Math.max(0, el.clientWidth - CARD_WIDTH);
-    const maxY = Math.max(0, el.clientHeight - CARD_HEIGHT);
+    const { width, height } = getCardSize();
+    const maxX = Math.max(0, el.clientWidth - width);
+    const maxY = Math.max(0, el.clientHeight - height);
     return { x: Math.min(Math.max(0, x), maxX), y: Math.min(Math.max(0, y), maxY) };
   };
 
@@ -144,9 +155,10 @@ export function TarotsSimulator() {
     if (!tableEl) return;
     event.preventDefault();
     const rect = tableEl.getBoundingClientRect();
+    const { width, height } = getCardSize();
     const pos = clampToTable(
-      event.clientX - rect.left - CARD_WIDTH / 2,
-      event.clientY - rect.top - CARD_HEIGHT / 2,
+      event.clientX - rect.left - width / 2,
+      event.clientY - rect.top - height / 2,
     );
     const uid = `card-${(uidRef.current += 1)}`;
     zRef.current += 1;
@@ -162,7 +174,7 @@ export function TarotsSimulator() {
     };
     setTable((prev) => [...prev, drawn]);
     setDeck((prev) => prev.slice(1));
-    dragRef.current = { uid, dx: CARD_WIDTH / 2, dy: CARD_HEIGHT / 2 };
+    dragRef.current = { uid, dx: width / 2, dy: height / 2 };
     setDraggingUid(uid);
     event.currentTarget.setPointerCapture(event.pointerId);
   };
@@ -212,8 +224,9 @@ export function TarotsSimulator() {
     if (!tableEl || !deckEl || !item) return;
     const tableRect = tableEl.getBoundingClientRect();
     const deckRect = deckEl.getBoundingClientRect();
-    const centerX = tableRect.left + item.x + CARD_WIDTH / 2;
-    const centerY = tableRect.top + item.y + CARD_HEIGHT / 2;
+    const { width, height } = getCardSize();
+    const centerX = tableRect.left + item.x + width / 2;
+    const centerY = tableRect.top + item.y + height / 2;
     const overDeck =
       centerX >= deckRect.left &&
       centerX <= deckRect.right &&
@@ -239,7 +252,7 @@ export function TarotsSimulator() {
   };
 
   const handleShuffle = () => {
-    if (shuffling) return;
+    if (shuffling || revealed) return;
     setDeck((prev) => shuffleDeck(prev));
     animateShuffle();
   };
@@ -295,6 +308,21 @@ export function TarotsSimulator() {
     [],
   );
 
+  // Keep cards inside the table when the viewport (and card size) changes.
+  useEffect(() => {
+    const handleResize = () => {
+      setTable((prev) => {
+        if (prev.length === 0) return prev;
+        return prev.map((c) => {
+          const pos = clampToTable(c.x, c.y);
+          return pos.x === c.x && pos.y === c.y ? c : { ...c, ...pos };
+        });
+      });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="tarots-page">
       <div className="tarots-page__inner">
@@ -304,7 +332,12 @@ export function TarotsSimulator() {
           <button type="button" className="tarots-btn" onClick={handleReset} disabled={resetting}>
             Reset
           </button>
-          <button type="button" className="tarots-btn" onClick={handleShuffle} disabled={shuffling}>
+          <button
+            type="button"
+            className="tarots-btn"
+            onClick={handleShuffle}
+            disabled={shuffling || revealed}
+          >
             Shuffle
           </button>
           {!revealed && (
