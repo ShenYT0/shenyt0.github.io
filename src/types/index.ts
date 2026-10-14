@@ -38,7 +38,6 @@ export interface TranslationSet {
     title: string;
     text: string;
   };
-  footer: { text: string };
 }
 
 export type SupportedLang = 'en' | 'fr' | 'zh' | 'ja';

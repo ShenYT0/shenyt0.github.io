@@ -41,7 +41,6 @@ export const translations: Record<SupportedLang, TranslationSet> = {
       title: 'Get in Touch',
       text: "Feel free to reach out! I'm always open to interesting conversations and opportunities.",
     },
-    footer: { text: 'Built with care.' },
   },
   fr: {
     hero: {
@@ -83,7 +82,6 @@ export const translations: Record<SupportedLang, TranslationSet> = {
       title: 'Me Contacter',
       text: "N'hésitez pas à me contacter ! Je suis toujours ouvert aux conversations et opportunités intéressantes.",
     },
-    footer: { text: 'Réalisé avec soin.' },
   },
   zh: {
     hero: {
@@ -125,7 +123,6 @@ export const translations: Record<SupportedLang, TranslationSet> = {
       title: '联系我',
       text: '欢迎联系！我一直对有趣的对话和机会持开放态度。',
     },
-    footer: { text: '用心打造。' },
   },
   ja: {
     hero: {
@@ -167,6 +164,5 @@ export const translations: Record<SupportedLang, TranslationSet> = {
       title: 'お問い合わせ',
       text: 'お気軽にご連絡ください！面白い会話や機会にいつでもオープンです。',
     },
-    footer: { text: '大切に作られました。' },
   },
 };
